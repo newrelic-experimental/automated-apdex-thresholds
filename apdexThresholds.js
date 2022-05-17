@@ -1,8 +1,8 @@
-var request = require("request");
 var ACCOUNT_ID = "ACCOUNT ID"
 var INGEST_LICENSE = "INGEST - LICENSE KEY"
 var NR_USER_KEY = "USER KEY"
 var desiredPercentile = 90;
+
 var headers = {
     "Content-Type": "json/application",
     "X-Api-Key": NR_USER_KEY
@@ -14,11 +14,12 @@ var options = {
     headers: headers
 };
 
-request(options,
-    function (error, response, body) {
+$http.get(options,
+    function (error, response) {
         if (error) return onErr(error);
         if (!error && response.statusCode == 200) {
-            var result = JSON.parse(body);
+            //console.log(response.body);
+            var result = JSON.parse(response.body);
             // console.log('Number of applications found:'+result["applications"].length);
             for (var i = 0; i < result["applications"].length; ++i) {
                 var application = result["applications"][i];
@@ -61,7 +62,7 @@ function getResponseTime(QUERY, appId, appName, RUMEnabled) {
             },
         }),
     };
-    $http.post(nerdOptions, (error, response, body) => {
+    $http.post(nerdOptions, (error, response) => {
         if (error) {
             isError = true
             lastError = error.toString()
@@ -70,11 +71,11 @@ function getResponseTime(QUERY, appId, appName, RUMEnabled) {
         }
         if (response.statusCode !== 200) {
             isError = true
-            lastError = JSON.stringify(body)
+            lastError = JSON.stringify(response.body)
             isRunning = false
-            return console.log(body, response.statusCode)
+            return console.log(response.body, response.statusCode)
         }
-        const results = JSON.parse(body)
+        const results = JSON.parse(response.body)
         const duration = results.data.actor.account.nrql.results[0]['percentile.duration'][`${desiredPercentile}`]
         setApdexT(duration, appId, appName, RUMEnabled);
         sendChangeToInsights(duration, appId, appName, RUMEnabled);
@@ -104,11 +105,11 @@ function sendChangeToInsights(duration, appId, appName, RUMEnabled) {
         body: insertData
     };
 
-    request(options,
-        function (error, response, body) {
+    $http.post(options,
+        function (error, response) {
             if (error) return onErr(error);
             if (!error) {
-                var result = JSON.parse(body);
+                var result = JSON.parse(response.body);
                 console.log("SUCCESS: " + response.statusCode + " Message: " + response.body + " Sent Data: " + insertData);
             }
         });
@@ -138,17 +139,17 @@ function setApdexT(duration, appId, appName, RUMEnabled) {
         url: 'https://api.newrelic.com/v2/applications/' + appId + '.json',
         headers:
         {
-            'X-Api-Key': adminKey,
+            'X-Api-Key': NR_USER_KEY,
             'Content-Type': 'application/json'
         },
         body: data
     };
 
-    request(options,
-        function (error, response, body) {
+    $http.put(options,
+        function (error, response) {
             if (error) return onErr(error);
             if (!error) {
-                var result = JSON.parse(body);
+                var result = JSON.parse(response.body);
                 console.log("SUCCESS: " + response.statusCode + " Message: " + response.body);
             }
         });
