@@ -1,23 +1,23 @@
 [![New Relic Experimental header](https://github.com/newrelic/opensource-website/raw/master/src/images/categories/Experimental.png)](https://opensource.newrelic.com/oss-category/#new-relic-experimental)
 
-# [Project Name] 
-![GitHub forks](https://img.shields.io/github/forks/newrelic-experimental/newrelic-experimental-FIT-template?style=social)
-![GitHub stars](https://img.shields.io/github/stars/newrelic-experimental/newrelic-experimental-FIT-template?style=social)
-![GitHub watchers](https://img.shields.io/github/watchers/newrelic-experimental/newrelic-experimental-FIT-template?style=social)
+# Automated Apdex Thresholds 
+![GitHub forks](https://img.shields.io/github/forks/newrelic-experimental/automated-apdex-thresholds?style=social)
+![GitHub stars](https://img.shields.io/github/stars/newrelic-experimental/automated-apdex-thresholds?style=social)
+![GitHub watchers](https://img.shields.io/github/watchers/newrelic-experimental/automated-apdex-thresholds?style=social)
 
-![GitHub all releases](https://img.shields.io/github/downloads/newrelic-experimental/newrelic-experimental-FIT-template/total)
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/newrelic-experimental/newrelic-experimental-FIT-template)
-![GitHub last commit](https://img.shields.io/github/last-commit/newrelic-experimental/newrelic-experimental-FIT-template)
-![GitHub Release Date](https://img.shields.io/github/release-date/newrelic-experimental/newrelic-experimental-FIT-template)
-
-
-![GitHub issues](https://img.shields.io/github/issues/newrelic-experimental/newrelic-experimental-FIT-template)
-![GitHub issues closed](https://img.shields.io/github/issues-closed/newrelic-experimental/newrelic-experimental-FIT-template)
-![GitHub pull requests](https://img.shields.io/github/issues-pr/newrelic-experimental/newrelic-experimental-FIT-template)
-![GitHub pull requests closed](https://img.shields.io/github/issues-pr-closed/newrelic-experimental/newrelic-experimental-FIT-template)
+![GitHub all releases](https://img.shields.io/github/downloads/newrelic-experimental/automated-apdex-thresholds/total)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/newrelic-experimental/automated-apdex-thresholds)
+![GitHub last commit](https://img.shields.io/github/last-commit/newrelic-experimental/automated-apdex-thresholds)
+![GitHub Release Date](https://img.shields.io/github/release-date/newrelic-experimental/automated-apdex-thresholds)
 
 
->[Brief description - what is the project and value does it provide? How often should users expect to get releases? How is versioning set up? Where does this project want to go?]
+![GitHub issues](https://img.shields.io/github/issues/newrelic-experimental/automated-apdex-thresholds)
+![GitHub issues closed](https://img.shields.io/github/issues-closed/newrelic-experimental/automated-apdex-thresholds)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/newrelic-experimental/automated-apdex-thresholds)
+![GitHub pull requests closed](https://img.shields.io/github/issues-pr-closed/newrelic-experimental/automated-apdex-thresholds)
+
+
+A New Relic synthetic script that automatically updates applications Apdex settings based on historical data trends.
 
 ## Value 
 
@@ -36,16 +36,7 @@
 
 ## Installation
 
-> [Include a step-by-step procedure on how to get your code installed. Be sure to include any third-party dependencies that need to be installed separately]
-
-## Getting Started
-
->[Simple steps to start working with the software similar to a "Hello World"]
-
-## Usage
-
->[**Optional** - Include more thorough instructions on how to use the software. This section might not be needed if the Getting Started section is enough. Remove this section if it's not needed.]
-
+Configure the script with the required licence keys (preferably use secure credentials) and target percentile. Add the script to a New Relic Scripted API script and run as required.
 
 ## Issues / enhancement requests
 
@@ -65,6 +56,5 @@ We encourage your contributions to improve Automated Apdex Threshold script! Kee
 
 ## License
 
-[Project Name] is licensed under the [Apache 2.0](http://apache.org/licenses/LICENSE-2.0.txt) License.
+Automated Apdex Thresholds is licensed under the [Apache 2.0](http://apache.org/licenses/LICENSE-2.0.txt) License.
 
->[If applicable: [Project Name] also uses source code from third-party libraries. You can find full details on which libraries are used and the terms under which they are licensed in the third-party notices document.]

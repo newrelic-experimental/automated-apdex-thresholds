@@ -1,7 +1,18 @@
-var ACCOUNT_ID = "ACCOUNT ID"
-var INGEST_LICENSE = "INGEST - LICENSE KEY"
-var NR_USER_KEY = "USER KEY"
-var desiredPercentile = 90;
+const ACCOUNT_ID = "0"                    // Your New Relic account Id
+const INGEST_LICENSE = "XXXX...NRAL"      // A New Relic ingest licence key
+const NR_USER_KEY = "NRAK..."             // A New Relic User API key
+
+var desiredPercentile = 90;                // Target percentile
+const NR_REGION = 'US';                      // New Relic data centre region
+
+
+// No need to change anything after here
+
+
+// US vs EU
+const GRAPHQL_DOMAIN = NR_REGION == 'US' ? 'https://api.newrelic.com/graphql' : 'https://api.eu.newrelic.com/graphql'
+const REST_DOMAIN = NR_REGION == 'US' ? 'https://api.newrelic.com/v2/' : 'https://api.newrelic.com/v2/'
+const EVENTS_API = NR_REGION == 'US' ? 'https://insights-collector.newrelic.com/v1/accounts/': 'https://insights-collector.eu01.nr-data.net/v1/accounts/'
 
 var headers = {
     "Content-Type": "json/application",
@@ -9,7 +20,7 @@ var headers = {
 };
 
 var options = {
-    url: "https://api.newrelic.com/v2/applications.json",
+    url: REST_DOMAIN+"applications.json",
     method: 'GET',
     headers: headers
 };
@@ -18,19 +29,14 @@ $http.get(options,
     function (error, response) {
         if (error) return onErr(error);
         if (!error && response.statusCode == 200) {
-            //console.log(response.body);
             var result = JSON.parse(response.body);
-            // console.log('Number of applications found:'+result["applications"].length);
             for (var i = 0; i < result["applications"].length; ++i) {
                 var application = result["applications"][i];
-                // console.log("App Settings: "+JSON.stringify(application["settings"]["end_user_apdex_threshold"]));
                 var appName = application["name"];
                 var appId = application["id"];
                 var browserApdexT = application["settings"]["end_user_apdex_threshold"];
                 var RUMEnabled = application["settings"]["enable_real_user_monitoring"];
-                // console.log("RUM Enabled: "+RUMEnabled);
                 var QUERY = 'SELECT percentile(duration,' + desiredPercentile + ') FROM Transaction WHERE appId =' + application["id"] + ' SINCE 7 DAY AGO'
-                // console.log('QUERY is: '+QUERY);
                 getResponseTime(QUERY, appId, appName, RUMEnabled);
             }
         }
@@ -38,8 +44,7 @@ $http.get(options,
 
 function getResponseTime(QUERY, appId, appName, RUMEnabled) {
     const nerdOptions = {
-        // Define endpoint URI, https://api.eu.newrelic.com/graphql for EU accounts
-        uri: 'https://api.newrelic.com/graphql',
+        uri: GRAPHQL_DOMAIN,
         headers: {
             'API-key': NR_USER_KEY,
             'Content-Type': 'application/json',
@@ -96,7 +101,7 @@ function sendChangeToInsights(duration, appId, appName, RUMEnabled) {
     console.log("+++***INSERT Payload***+++: " + insertData);
     var options = {
         method: 'POST',
-        url: 'https://insights-collector.newrelic.com/v1/accounts/' + ACCOUNT_ID + '/events',
+        url: EVENTS_API + ACCOUNT_ID + '/events',
         headers:
         {
             'X-Insert-Key': INGEST_LICENSE,
@@ -109,7 +114,7 @@ function sendChangeToInsights(duration, appId, appName, RUMEnabled) {
         function (error, response) {
             if (error) return onErr(error);
             if (!error) {
-                var result = JSON.parse(response.body);
+                //var result = JSON.parse(response.body);
                 console.log("SUCCESS: " + response.statusCode + " Message: " + response.body + " Sent Data: " + insertData);
             }
         });
@@ -136,7 +141,7 @@ function setApdexT(duration, appId, appName, RUMEnabled) {
     console.log("+++***Settings Payload***+++: " + data);
     var options = {
         method: 'PUT',
-        url: 'https://api.newrelic.com/v2/applications/' + appId + '.json',
+        url: REST_DOMAIN+'applications/' + appId + '.json',
         headers:
         {
             'X-Api-Key': NR_USER_KEY,
