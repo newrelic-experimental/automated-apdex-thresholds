@@ -1,37 +1,42 @@
 [![New Relic Experimental header](https://github.com/newrelic/opensource-website/raw/master/src/images/categories/Experimental.png)](https://opensource.newrelic.com/oss-category/#new-relic-experimental)
 
-# Automated Apdex Thresholds 
-![GitHub forks](https://img.shields.io/github/forks/newrelic-experimental/automated-apdex-thresholds?style=social)
-![GitHub stars](https://img.shields.io/github/stars/newrelic-experimental/automated-apdex-thresholds?style=social)
-![GitHub watchers](https://img.shields.io/github/watchers/newrelic-experimental/automated-apdex-thresholds?style=social)
-
-![GitHub all releases](https://img.shields.io/github/downloads/newrelic-experimental/automated-apdex-thresholds/total)
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/newrelic-experimental/automated-apdex-thresholds)
-![GitHub last commit](https://img.shields.io/github/last-commit/newrelic-experimental/automated-apdex-thresholds)
-![GitHub Release Date](https://img.shields.io/github/release-date/newrelic-experimental/automated-apdex-thresholds)
+### Use API automation to set your Apdex threshold
 
 
-![GitHub issues](https://img.shields.io/github/issues/newrelic-experimental/automated-apdex-thresholds)
-![GitHub issues closed](https://img.shields.io/github/issues-closed/newrelic-experimental/automated-apdex-thresholds)
-![GitHub pull requests](https://img.shields.io/github/issues-pr/newrelic-experimental/automated-apdex-thresholds)
+        
+![GitHub last commit](https://img.shields.io/github/last-commit/newrelic-experimental/automated-apdex-thresholds) 
+![GitHub issues](https://img.shields.io/github/issues/newrelic-experimental/automated-apdex-thresholds) 
+![GitHub issues closed](https://img.shields.io/github/issues-closed/newrelic-experimental/automated-apdex-thresholds) 
+![GitHub pull requests](https://img.shields.io/github/issues-pr/newrelic-experimental/automated-apdex-thresholds) 
 ![GitHub pull requests closed](https://img.shields.io/github/issues-pr-closed/newrelic-experimental/automated-apdex-thresholds)
 
+#### Automating Apdex calculation for your APM applications within New Relic can provide several benefits, including:
 
-A New Relic synthetic script that automatically updates applications Apdex settings based on historical data trends.
+* **Consistency**: By automating the Apdex calculation, you can ensure that the same calculation method is used every time, which can help you compare performance data across different time periods and applications.
 
-## Value 
+* **Efficiency**: Automating the Apdex calculation can save you time and effort compared to manually calculating Apdex for each application and time period.
 
-|Metrics | Events | Logs | Traces | Visualization | Automation |
-|:-:|:-:|:-:|:-:|:-:|:-:|
-|:white_check_mark:|:white_check_mark:|:x:|:white_check_mark:|:x:|:x:|
+* **Timeliness**: By automating the Apdex calculation, you can get Apdex scores for your APM applications in real-time, which can help you quickly identify performance issues and take action to resolve them.
 
-### List of Metrics,Events,Logs,Traces 
+* **Customization**: You can customize the Apdex thresholds based on your specific requirements and application performance targets. Automating the calculation can help you easily adjust the thresholds as needed.
+
+* **Insight**: Apdex scores can provide valuable insight into the performance of your APM applications. Automating the calculation can help you track performance trends over time and identify areas for improvement.
+
+> 
+
+## The required steps
+
+First, you want to choose an appropriate Apdex threshold. Without diving into the math, you can use a specific percentile response time for your Apdex threshold to get a specific Apdex score...Check out this [blog post](https://newrelic.com/blog/best-practices/how-to-choose-apdex-t) for more information
+
+### List of Events
 |Name | Type | Description |
 |:-:|:-:|:-:|
-|*metric.name* | Metric| *description*|
-|*event.name* | Event|  *description*|
-|*log.name* | Log|  *description*|
-|*trace.name*| Trace| *description*
+|*lighthousePerformance* | Event|  *The overall Performance score of your site, including performance audit information*|
+|*lighthouseAccessibility* | Event|  *The overall Accessibility score of your site, including Accessibility audit information*|
+|*lighthouseSeo* | Event|  *The overall SEO score of your site, including SEO audit information*|
+|*lighthousePwa* | Event|  *The overall PWA score of your site, including PWA audit information*|
+|*lighthouseBestPractices* | Event|  *The overall Best Practices score of your site, including Best Practices audit information*|
+
 |---|---|---|
 
 ## Installation
