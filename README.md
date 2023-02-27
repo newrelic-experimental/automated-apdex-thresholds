@@ -39,7 +39,7 @@ You'll need to configure the following fields in your serverless environment
 
 
 
-See custom event within the Data explorer 
+See the custom event within the Data explorer 
 <img width="1368" alt="Screenshot 2023-02-27 at 14 23 58" src="https://user-images.githubusercontent.com/12893310/221589003-c6bec55a-635e-4b17-8e26-53257e09f611.png">
 
 View the Validation results within Synthetics 
