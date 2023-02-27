@@ -28,16 +28,16 @@
 
 First, you want to choose an appropriate Apdex threshold. Without diving into the math, you can use a specific percentile response time for your Apdex threshold to get a specific Apdex score...Check out this [blog post](https://newrelic.com/blog/best-practices/how-to-choose-apdex-t) for more information
 
-### List of Events
-|Name | Type | Description |
-|:-:|:-:|:-:|
-|*lighthousePerformance* | Event|  *The overall Performance score of your site, including performance audit information*|
-|*lighthouseAccessibility* | Event|  *The overall Accessibility score of your site, including Accessibility audit information*|
-|*lighthouseSeo* | Event|  *The overall SEO score of your site, including SEO audit information*|
-|*lighthousePwa* | Event|  *The overall PWA score of your site, including PWA audit information*|
-|*lighthouseBestPractices* | Event|  *The overall Best Practices score of your site, including Best Practices audit information*|
+Secondly, create an Scripted API monitor within Synthetics and configure the monitor to run one a day/week from one location.
 
-|---|---|---|
+You'll need to configure the following fields in your serverless environment
+- INGEST_LICENSE: [New Relic Events Insert API key](https://docs.newrelic.com/docs/apis/intro-apis/new-relic-api-keys/#license-key)
+- USER KEY: [New Relic USER key](https://docs.newrelic.com/docs/apis/intro-apis/new-relic-api-keys/#user-key)
+- ACCOUNT_ID: [New Relic Account Id](https://docs.newrelic.com/docs/accounts/install-new-relic/account-setup/account-id)
+- NR_REGION: US or EU
+- desiredPercentile: 90
+
+
 
 ## Installation
 
