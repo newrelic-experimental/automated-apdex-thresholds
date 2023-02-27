@@ -28,7 +28,7 @@
 
 First, you want to choose an appropriate Apdex threshold. Without diving into the math, you can use a specific percentile response time for your Apdex threshold to get a specific Apdex score...Check out this [blog post](https://newrelic.com/blog/best-practices/how-to-choose-apdex-t) for more information
 
-Secondly, create an Scripted API monitor within Synthetics and configure the monitor to run one a day/week from one location.
+Secondly, create an Scripted API monitor within Synthetics and configure the monitor to run once a day/week from one location.
 
 You'll need to configure the following fields in your serverless environment
 - INGEST_LICENSE: [New Relic Events Insert API key](https://docs.newrelic.com/docs/apis/intro-apis/new-relic-api-keys/#license-key)
