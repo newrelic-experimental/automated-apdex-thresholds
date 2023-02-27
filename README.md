@@ -39,6 +39,15 @@ You'll need to configure the following fields in your serverless environment
 
 
 
+See custom event within the Data explorer 
+<img width="1368" alt="Screenshot 2023-02-27 at 14 23 58" src="https://user-images.githubusercontent.com/12893310/221589003-c6bec55a-635e-4b17-8e26-53257e09f611.png">
+
+View the Validation results within Synthetics 
+<img width="1366" alt="Screenshot 2023-02-27 at 14 25 34" src="https://user-images.githubusercontent.com/12893310/221589443-859f1b33-fab3-4f92-93a7-3f04c12cc8c7.png">
+
+
+
+
 ## Installation
 
 Configure the script with the required licence keys (preferably use secure credentials) and target percentile. Add the script to a New Relic Scripted API script and run as required.
