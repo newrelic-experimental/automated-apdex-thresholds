@@ -37,7 +37,38 @@ You'll need to configure the following fields in your serverless environment
 - NR_REGION: US or EU
 - desiredPercentile: 90
 
+his script is a Node.js script that interacts with New Relic's API to gather performance data and update settings for applications in your New Relic account. Here's a breakdown of what it does:
 
+Configuration:
+
+* It defines constants such as ACCOUNT_ID, INGEST_LICENSE, NR_USER_KEY, desiredPercentile, and NR_REGION. These are used for authentication and configuration.
+API Endpoints:
+
+* Based on the region (NR_REGION), it sets different API endpoints for GraphQL (GRAPHQL_DOMAIN), REST (REST_DOMAIN), and Insights (EVENTS_API).
+HTTP Headers:
+
+* It sets up HTTP headers including the content type and API key (NR_USER_KEY).
+Make a GET Request to Retrieve Application Information:
+
+* It makes a GET request to the New Relic API to retrieve a list of applications (applications.json). For each application, it extracts relevant information such as appName, appId, browserApdexT, and RUMEnabled.
+GraphQL Query for Response Time:
+
+* For each application, it constructs a GraphQL query (QUERY) to get the response time percentile data for the last 7 days.
+Function getResponseTime:
+
+* It sends a POST request to the New Relic GraphQL API to execute the GraphQL query and retrieves the response time data.
+Function sendChangeToInsights:
+
+* It formats the response time data and sends it to New Relic Insights as a custom event type "ApdexChange".
+Function setApdexT:
+
+* It sets the Apdex threshold for each application based on the obtained response time percentile. It sends a PUT request to update the application settings.
+Error Handling:
+
+* There are error-handling mechanisms (onErr function) in place to log and handle errors that may occur during API requests.
+Logging:
+
+* Throughout the script, there are console.log statements used for logging various information, such as the payload sent to Insights and the settings payload.
 
 See the custom event within the Data explorer 
 <img width="1368" alt="Screenshot 2023-02-27 at 14 23 58" src="https://user-images.githubusercontent.com/12893310/221589003-c6bec55a-635e-4b17-8e26-53257e09f611.png">
