@@ -37,7 +37,7 @@ You'll need to configure the following fields in your serverless environment
 - NR_REGION: US or EU
 - desiredPercentile: 90
 
-his script is a Node.js script that interacts with New Relic's API to gather performance data and update settings for applications in your New Relic account. Here's a breakdown of what it does:
+This script is a Node.js script that interacts with New Relic's API to gather performance data and update settings for applications in your New Relic account. Here's a breakdown of what it does:
 
 Configuration:
 
