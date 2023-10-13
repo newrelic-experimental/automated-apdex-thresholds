@@ -10,9 +10,9 @@ const NR_REGION = 'US';                      // New Relic data centre region
 
 
 // US vs EU
-const GRAPHQL_DOMAIN = NR_REGION == 'US' ? 'https://api.newrelic.com/graphql' : 'https://api.eu.newrelic.com/graphql'
-const REST_DOMAIN = NR_REGION == 'US' ? 'https://api.newrelic.com/v2/' : 'https://api.newrelic.com/v2/'
-const EVENTS_API = NR_REGION == 'US' ? 'https://insights-collector.newrelic.com/v1/accounts/': 'https://insights-collector.eu01.nr-data.net/v1/accounts/'
+const GRAPHQL_DOMAIN = NR_REGION == 'US' ? 'https://api.newrelic.com/graphql' : 'https://api.eu.newrelic.com/graphql';
+const REST_DOMAIN = NR_REGION == 'US' ? 'https://api.newrelic.com/v2/' : 'https://api.newrelic.com/v2/';
+const EVENTS_API = NR_REGION == 'US' ? 'https://insights-collector.newrelic.com/v1/accounts/' : 'https://insights-collector.eu01.nr-data.net/v1/accounts/';
 
 var headers = {
     "Content-Type": "json/application",
@@ -20,7 +20,7 @@ var headers = {
 };
 
 var options = {
-    url: REST_DOMAIN+"applications.json",
+    url: REST_DOMAIN + "applications.json",
     method: 'GET',
     headers: headers
 };
@@ -34,15 +34,13 @@ $http.get(options,
                 var application = result["applications"][i];
                 var appName = application["name"];
                 var appId = application["id"];
-                var browserApdexT = application["settings"]["end_user_apdex_threshold"];
-                var RUMEnabled = application["settings"]["enable_real_user_monitoring"];
-                var QUERY = 'SELECT percentile(duration,' + desiredPercentile + ') FROM Transaction WHERE appId =' + application["id"] + ' SINCE 7 DAY AGO'
-                getResponseTime(QUERY, appId, appName, RUMEnabled);
+                var QUERY = 'SELECT percentile(duration,' + desiredPercentile + ') FROM Transaction WHERE appId =' + application["id"] + ' SINCE 7 DAY AGO';
+                getResponseTime(QUERY, appId, appName);
             }
         }
     });
 
-function getResponseTime(QUERY, appId, appName, RUMEnabled) {
+function getResponseTime(QUERY, appId, appName) {
     const nerdOptions = {
         uri: GRAPHQL_DOMAIN,
         headers: {
@@ -69,33 +67,31 @@ function getResponseTime(QUERY, appId, appName, RUMEnabled) {
     };
     $http.post(nerdOptions, (error, response) => {
         if (error) {
-            isError = true
-            lastError = error.toString()
-            isRunning = false
-            return console.log(error)
+            isError = true;
+            lastError = error.toString();
+            isRunning = false;
+            return console.log(error);
         }
         if (response.statusCode !== 200) {
-            isError = true
-            lastError = JSON.stringify(response.body)
-            isRunning = false
-            return console.log(response.body, response.statusCode)
+            isError = true;
+            lastError = JSON.stringify(response.body);
+            isRunning = false;
+            return console.log(response.body, response.statusCode);
         }
-        const results = JSON.parse(response.body)
-        const duration = results.data.actor.account.nrql.results[0]['percentile.duration'][`${desiredPercentile}`]
-        setApdexT(duration, appId, appName, RUMEnabled);
-        sendChangeToInsights(duration, appId, appName, RUMEnabled);
+        const results = JSON.parse(response.body);
+        const duration = results.data.actor.account.nrql.results[0]['percentile.duration'][`${desiredPercentile}`];
+        setApdexT(duration, appId, appName);
+        sendChangeToInsights(duration, appId, appName);
     });
 }
 
-function sendChangeToInsights(duration, appId, appName, RUMEnabled) {
+function sendChangeToInsights(duration, appId, appName) {
     var ApdexT = duration;
     var insertData = JSON.stringify({
         eventType: "ApdexChange",
         "appName": appName,
         "apmApdexT_new": ApdexT,
-        // "browserApdexT_new": EUApdexT,
         "desiredPercentile": desiredPercentile,
-        "enable_real_user_monitoring": RUMEnabled
     });
 
     console.log("+++***INSERT Payload***+++: " + insertData);
@@ -114,17 +110,15 @@ function sendChangeToInsights(duration, appId, appName, RUMEnabled) {
         function (error, response) {
             if (error) return onErr(error);
             if (!error) {
-                //var result = JSON.parse(response.body);
                 console.log("SUCCESS: " + response.statusCode + " Message: " + response.body + " Sent Data: " + insertData);
             }
         });
 }
 
-function setApdexT(duration, appId, appName, RUMEnabled) {
+function setApdexT(duration, appId, appName) {
     console.log("DURATION PASSED: " + duration);
     var ApdexT = duration;
     console.log("DURATION ROUNDED: " + ApdexT);
-    //var EUApdexT = parseFloat(browserApdexT);
 
     var data = JSON.stringify({
         application:
@@ -132,8 +126,6 @@ function setApdexT(duration, appId, appName, RUMEnabled) {
             name: appName,
             settings: {
                 "app_apdex_threshold": ApdexT,
-                // "end_user_apdex_threshold": EUApdexT,
-                "enable_real_user_monitoring": RUMEnabled
             }
         }
     });
@@ -141,7 +133,7 @@ function setApdexT(duration, appId, appName, RUMEnabled) {
     console.log("+++***Settings Payload***+++: " + data);
     var options = {
         method: 'PUT',
-        url: REST_DOMAIN+'applications/' + appId + '.json',
+        url: REST_DOMAIN + 'applications/' + appId + '.json',
         headers:
         {
             'X-Api-Key': NR_USER_KEY,
