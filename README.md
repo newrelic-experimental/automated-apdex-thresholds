@@ -50,7 +50,7 @@ HTTP Headers:
 * It sets up HTTP headers including the content type and API key (NR_USER_KEY).
 Make a GET Request to Retrieve Application Information:
 
-* It makes a GET request to the New Relic API to retrieve a list of applications (applications.json). For each application, it extracts relevant information such as appName, appId, browserApdexT, and RUMEnabled.
+* It makes a GET request to the New Relic API to retrieve a list of applications (applications.json). For each application, it extracts relevant information such as appName & appId
 GraphQL Query for Response Time:
 
 * For each application, it constructs a GraphQL query (QUERY) to get the response time percentile data for the last 7 days.
